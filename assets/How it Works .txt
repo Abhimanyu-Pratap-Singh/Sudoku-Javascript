@@ -1,0 +1,32 @@
+************************************ZoomIn******************************************
+
+1.
+When you open the sudoku file (index.html) window.onload function is called
+which in turn shows us an alert of welcome message.
+
+2.
+when you click on easy/medium/hard button respective function is called which
+clears the previous Sudoku Puzzle and then passes a string of hard coded sudoku
+puzzle to a local variable named board and then calls the function Start(board).
+
+3.
+start board fills the value in Sudoku from string the value which are pre-given
+are given attribute of readonly so that user can-not manupulate them.
+and on the empty input cells attribute of onkeyup is given to function CheckDouble()
+
+4.
+due to cell hover css color of cells changes as you move the cursor across the board
+and when user clicks on cell onclick function is called which highlights the 
+row,column,grid of the cell.
+
+5.
+whenever user enters the value in empty cell onkeyup function Doublecheck is called
+which checks for double values in Row,Column and 3x3 grid. if there is any double
+value it changes the css color property to red. it also highlights the cell with 
+same value inuted by user which helps a lot while solving.
+
+6.
+when user clicks on validate button the programs calls function validate which checks
+for sum of each row,column,3x3 grid must be 45. if not then alert message Something
+went wrong Try Again is shown and if everything is alright then Sudoku Complete Alert
+is Shown to the user.

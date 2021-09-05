@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <title>Abhimanyu's Sudoku</title>
+</head>
+
+<body>
+        <!-- Heading -->
+    <h1 class="heading">Sudoku</h1>
+
+    <!-- Sudoku Hardness Selector -->
+    <div class="hardness">
+        <button class="easy btn" id="thats-easy" onclick="clearprev()">Easy</button>
+        <button class="medium btn" id="thats-okay" onclick="clearprev()">Medium</button>
+        <button class="hard btn" id="oops-hard" onclick="clearprev()">Hard</button>
+    </div>
+
+    <!-- Actual Sudoku Board -->
+    <div class="board-container">
+        <table class="board" id="main-board">
+            <tr class="rows rowNo-1" id="row-01">
+                <td class="column-1 cell" id="cell-01"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="1" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-02"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="2" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-03"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="3" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-04"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="4" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-05"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="5" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-06"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="6" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-07"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="7" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-08"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="8" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-09"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="9" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-2" id="row-02">
+                <td class="column-1 cell" id="cell-10"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="10" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-11"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="11" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-12"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="12" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-13"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="13" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-14"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="14" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-15"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="15" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-16"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="16" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-17"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="17" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-18"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="18" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-3" id="row-03">
+                <td class="column-1 cell" id="cell-19"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="19" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-20"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="20" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-21"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="21" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-22"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="22" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-23"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="23" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-24"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="24" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-25"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="25" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-26"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="26" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-27"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="27" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-4" id="row-04">
+                <td class="column-1 cell" id="cell-28"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="28" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-29"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="29" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-30"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="30" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-31"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="31" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-32"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="32" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-33"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="33" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-34"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="34" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-35"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="35" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-36"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="36" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-5" id="row-05">
+                <td class="column-1 cell" id="cell-37"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="37" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-38"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="38" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-39"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="39" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-40"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="40" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-41"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="41" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-42"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="42" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-43"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="43" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-44"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="44" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-45"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="45" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-6" id="row-06">
+                <td class="column-1 cell" id="cell-46"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="46" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-47"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="47" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-48"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="48" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-49"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="49" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-50"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="50" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-51"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="51" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-52"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="52" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-53"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="53" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-54"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="54" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-7" id="row-07">
+                <td class="column-1 cell" id="cell-55"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="55" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-56"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="56" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-57"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="57" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-58"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="58" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-59"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="59" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-60"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="60" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-61"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="61" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-62"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="62" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-63"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="63" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-8" id="row-08">
+                <td class="column-1 cell" id="cell-64"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="64" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-65"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="65" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-66"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="66" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-67"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="67" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-68"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="68" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-69"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="69" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-70"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="70" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-71"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="71" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-72"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="72" maxlength="1" /></td>
+            </tr>
+            <tr class="rows rowNo-9" id="row-09">
+                <td class="column-1 cell" id="cell-73"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="73" maxlength="1" /></td>
+                <td class="column-2 cell" id="cell-74"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="74" maxlength="1" /></td>
+                <td class="column-3 cell" id="cell-75"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="75" maxlength="1" /></td>
+                <td class="column-4 cell" id="cell-76"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="76" maxlength="1" /></td>
+                <td class="column-5 cell" id="cell-77"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="77" maxlength="1" /></td>
+                <td class="column-6 cell" id="cell-78"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="78" maxlength="1" /></td>
+                <td class="column-7 cell" id="cell-79"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="79" maxlength="1" /></td>
+                <td class="column-8 cell" id="cell-80"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="80" maxlength="1" /></td>
+                <td class="column-9 cell" id="cell-81"> <input onkeypress="javascript:return isNumber(event)"
+                        type="text" class="input-cell" id="81" maxlength="1" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Validate Button -->
+    <button class="validate-button btn" id="validate">Validate</button>
+</body>
+<script src="script.js"></script>
+</html>
