@@ -1,21 +1,252 @@
-//  Imported strings of Sudoku from Internet (You can make one for yourself)
-const easy = [
-  "---7--9-3----8------7-6---8--85----1----396-----4-75--7-46-------23-5----9-----42",
-  "821754963659283174347961258978526431415839627263417589734692815182345796596178342",
-  "6------7------5-2------1---362----81--96-----71--9-4-5-2---651---78----345-------",
-  "685329174971485326234761859362574981549618732718293465823946517197852643456137298"
-];
-const medium = [
-  "-7-6--4-------4-2--2------7-----3--9---4851----82-1-7-1--84-9--2-6-------3-----58",
-  "8736124959153374826624958317541763289792485163368291574157846932286539741439127658",
-  "--9-------4----6-758-31----15--4-36-------4-8----9-------75----3-------1--2--3---",
-  "619472583243985617587316924158247369926531478734698152891754236365829741472163895"
-];
-const hard = [
-  "-1-5-------97-42----5----7-5---3---7-6--2-41---8--5---1-4------2-3-----9-7----8--",
-  "712583694639714258845269173521436987367928415498175326184697532253841769976352841"
-];
+let solvedSudoku = null;
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function applyMovingEffect(){
+  for(let i = 1 ; i <= 81 ; i++){
+    id(i).classList.add("allNo");
+    await sleep(10);
+    if(i > 14) id(i-14).classList.remove("allNo");
+  }
+  clearSelection();
+}
+
+id("show-hint").addEventListener("click", showHint);
+async function showHint() {
+  await applyMovingEffect();
+  for(let i = 1 ; i <= 81 ; i++){
+    let k = id(i).value * 1;
+    if(k == 0){
+      id(i).value = solvedSudoku[i-1];
+      id(i).classList.add("allNo")
+      break;
+    }
+  }
+}
+
+// Generate a fully solved Sudoku grid
+function generateSolvedSudoku() {
+  let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
+
+  function isSafe(grid, row, col, num) {
+    // Check if 'num' is in the row
+    for (let i = 0; i < 9; i++) {
+      if (grid[row][i] === num) return false;
+    }
+
+    // Check if 'num' is in the column
+    for (let i = 0; i < 9; i++) {
+      if (grid[i][col] === num) return false;
+    }
+
+    // Check if 'num' is in the 3x3 box
+    let boxRow = Math.floor(row / 3) * 3;
+    let boxCol = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (grid[boxRow + i][boxCol + j] === num) return false;
+      }
+    }
+    return true;
+  }
+
+  function fillGrid(grid) {
+    let row = -1;
+    let col = -1;
+    let isEmpty = true;
+
+    // Find the next empty cell
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (grid[i][j] === 0) {
+          row = i;
+          col = j;
+          isEmpty = false;
+          break;
+        }
+      }
+      if (!isEmpty) break;
+    }
+
+    // If there's no empty cell, the grid is filled
+    if (isEmpty) return true;
+
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    shuffle(numbers); // Shuffle the numbers to randomize the order
+  
+    // Try all numbers from 1 to 9 in random order
+    for (let i = 0; i < 9; i++) {
+      let num = numbers[i];
+      if (isSafe(grid, row, col, num)) {
+        grid[row][col] = num;
+  
+        // Recurse to fill the next cell
+        if (fillGrid(grid)) return true;
+        grid[row][col] = 0; // Backtrack
+      }
+    }
+    return false;
+  }
+
+  fillGrid(grid);
+  return grid;
+}
+
+// Check if the Sudoku puzzle has exactly one solution
+function isValid(grid) {
+  let solutionCount = 0;
+
+  function solve(grid) {
+    let row = -1;
+    let col = -1;
+    let isEmpty = true;
+
+    // Find the next empty cell
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (grid[i][j] === 0) {
+          row = i;
+          col = j;
+          isEmpty = false;
+          break;
+        }
+      }
+      if (!isEmpty) break;
+    }
+
+
+    // If there's no empty cell, we've found a solution
+    if (isEmpty) {
+      solutionCount++;
+      return solutionCount === 1;  // If we find more than one solution, return false
+    }
+
+    // Try all numbers from 1 to 9
+    for (let num = 1; num <= 9; num++) {
+      if (isSafe(grid, row, col, num)) {
+        grid[row][col] = num;
+        if (solve(grid)) {
+          if (solutionCount > 1) return false; // Found more than one solution
+        }
+        grid[row][col] = 0; // Backtrack
+      }
+    }
+    return false;
+  }
+
+  solve(grid);
+  return solutionCount === 1; // Returns true if only one solution is found
+}
+
+// Shuffle an array (Fisher-Yates algorithm)
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+// Function to shuffle rows within 3x3 blocks
+function shuffleRows(grid) {
+  for (let i = 0; i < 9; i += 3) {
+    // Shuffle rows within the current 3x3 block (rows i, i+1, i+2)
+    shuffle(grid.slice(i, i + 3));
+  }
+}
+
+// Function to shuffle columns within 3x3 blocks
+function shuffleColumns(grid) {
+  for (let i = 0; i < 9; i += 3) {
+    let blockColumns = [];
+    for (let j = 0; j < 9; j++) {
+      blockColumns.push(grid[j].slice(i, i + 3));
+    }
+    shuffle(blockColumns);
+    for (let j = 0; j < 9; j++) {
+      grid[j].splice(i, 3, ...blockColumns[j]);
+    }
+  }
+}
+
+// Generate a random Sudoku puzzle with one solution
+function generatePuzzle(gameMode) {
+
+  let grid = generateSolvedSudoku();
+
+  // Shuffle rows and columns to create variation
+  if(Math.floor(Math.random()*9) > 4){
+    console.log('shuffling rows');
+    shuffleRows(grid);
+  } else {
+    console.log('shuffling cols');
+    shuffleColumns(grid);
+  }
+
+  const cellsToRemove = (gameMode == 55) ? 64 : gameMode; // Number of cells to remove for the puzzle
+  let puzzle = JSON.parse(JSON.stringify(grid)); // Make a copy of the grid
+
+  let removedCells = 0;
+  // Randomly remove cells
+
+  let hashmap = new Map();
+
+  while (removedCells < cellsToRemove) {
+    let row = Math.floor(Math.random() * 9);
+    let col = Math.floor(Math.random() * 9);
+    if(hashmap.size == 81) break;
+    if(puzzle[row][col] == 0 || hashmap.get(row+''+col)) continue;
+    hashmap.set(row+''+col, true);
+    let temp = puzzle[row][col];
+    puzzle[row][col] = 0;
+    if (!isValid(puzzle)) {
+        puzzle[row][col] = temp;
+    } else {
+      removedCells++;
+    }
+  }
+
+  if(removedCells < gameMode){
+    return generatePuzzle(gameMode);
+  } else {
+    solvedSudoku = gridToString(grid);
+    return puzzle;
+  }
+}
+
+function isSafe(grid, row, col, num) {
+  // Check if 'num' is in the row
+  for (let i = 0; i < 9; i++) {
+    if (grid[row][i] === num) return false;
+  }
+
+  // Check if 'num' is in the column
+  for (let i = 0; i < 9; i++) {
+    if (grid[i][col] === num) return false;
+  }
+
+  // Check if 'num' is in the 3x3 box
+  let boxRow = Math.floor(row / 3) * 3;
+  let boxCol = Math.floor(col / 3) * 3;
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (grid[boxRow + i][boxCol + j] === num) return false;
+    }
+  }
+  return true;
+}
+
+// Convert the grid into the desired string format
+function gridToString(grid) {
+  let puzzleString = '';
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      puzzleString += grid[i][j] === 0 ? '-' : grid[i][j];
+    }
+  }
+  return puzzleString;
+}
 
 // (Declared Global Variables)
 var currentId; // (using for current Id)
@@ -26,12 +257,12 @@ var GridSums = 0;
 
 
 // (Function triggering on window loading) 
-
 window.onload = function () {
   alert("Welcome to Abhimanyu's Sudoku");
   id("thats-easy").addEventListener("click", starteasy);    // Difficulty : Easy
   id("thats-okay").addEventListener("click", startokay);    // Difficulty : Medium
   id("oops-hard").addEventListener("click", starthard);     // Difficulty : Hard
+  id("over-kill").addEventListener("click", startOverKill);     // Difficulty : Hard
 }
 
 
@@ -88,21 +319,28 @@ for (let l = 1; l <= 81; l++) {
 // (calling easy Sudoku)
 function starteasy() {
   clearprev();
-  let board = easy[0];
+  let board = gridToString(generatePuzzle(40));
   start(board);
 }
 
 // (calling Medium sudoku)
 function startokay() {
   clearprev();
-  let board = medium[0];
+  let board = gridToString(generatePuzzle(45));
   start(board);
 }
 
 //  (Calling Hard Sudoku)
 function starthard() {
   clearprev();
-  let board = hard[0];
+  let board = gridToString(generatePuzzle(50));
+  start(board);
+}
+
+//  (Calling Hard Sudoku)
+function startOverKill() {
+  clearprev();
+  let board = gridToString(generatePuzzle(55));
   start(board);
 }
 
