@@ -1,4 +1,24 @@
 let solvedSudoku = null;
+let unsolvedSudoku = null;
+let maxHints = null;
+
+function confirmProceed() {
+  if (confirm("Do you want to proceed?")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+id("reset").addEventListener("click", resetBoard);
+function resetBoard(){
+  if(confirmProceed()){
+    hintCount = 0;
+    document.getElementById("hint-count").value = hintCount +'/'+maxHints;
+    clearprev();
+    start(unsolvedSudoku);
+  }
+}
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -12,16 +32,46 @@ async function applyMovingEffect(){
   }
   clearSelection();
 }
+let hintCount = 0;
 
 id("show-hint").addEventListener("click", showHint);
 async function showHint() {
+  if(solvedSudoku != null && hintCount < maxHints){
+    hintCount++; // Increment hint count
+    document.getElementById("hint-count").value = hintCount +'/'+maxHints;
+  } else {
+    alert("You Have Exhausted Max Hints Allowed !! :-) ")
+    return;
+  }
   await applyMovingEffect();
-  for(let i = 1 ; i <= 81 ; i++){
-    let k = id(i).value * 1;
-    if(k == 0){
-      id(i).value = solvedSudoku[i-1];
-      id(i).classList.add("allNo")
-      break;
+  let foundEmpty = false;
+  while(!foundEmpty){
+    let n = Math.floor(Math.random() * 81)
+    let i = n;
+    while(i <= 81){
+      let k = id(i).value * 1;
+      if(k == 0){
+        id(i).value = solvedSudoku[i-1];
+        id(i).classList.add("allNo")
+        foundEmpty = true;
+        break;
+      }   else {
+        i++;
+      }
+    }
+    i = n;
+    if(!foundEmpty){
+      while(i >= 1){
+        let k = id(i).value * 1;
+        if(k == 0){
+          id(i).value = solvedSudoku[i-1];
+          id(i).classList.add("allNo")
+          foundEmpty = true;
+          break;
+        }   else {
+          i--;
+        }
+      }
     }
   }
 }
@@ -318,30 +368,54 @@ for (let l = 1; l <= 81; l++) {
 
 // (calling easy Sudoku)
 function starteasy() {
-  clearprev();
-  let board = gridToString(generatePuzzle(40));
-  start(board);
+  if(confirmProceed()){
+    hintCount = 0;
+    maxHints = 10;
+    document.getElementById("hint-count").value = hintCount +'/'+maxHints;
+    clearprev();
+    let board = gridToString(generatePuzzle(40));
+    unsolvedSudoku = board;
+    start(board);
+  }
 }
 
 // (calling Medium sudoku)
 function startokay() {
-  clearprev();
-  let board = gridToString(generatePuzzle(45));
-  start(board);
+  if(confirmProceed()){
+    hintCount = 0;
+    maxHints = 8;
+    document.getElementById("hint-count").value = hintCount +'/'+maxHints;
+    clearprev();
+    let board = gridToString(generatePuzzle(45));
+    unsolvedSudoku = board;
+    start(board);
+  }
 }
 
 //  (Calling Hard Sudoku)
 function starthard() {
-  clearprev();
-  let board = gridToString(generatePuzzle(50));
-  start(board);
+  if(confirmProceed()){
+    hintCount = 0;
+    maxHints = 5;
+    document.getElementById("hint-count").value = hintCount +'/'+maxHints;
+    clearprev();
+    let board = gridToString(generatePuzzle(50));
+    unsolvedSudoku = board;
+    start(board);
+  }
 }
 
 //  (Calling Hard Sudoku)
 function startOverKill() {
-  clearprev();
-  let board = gridToString(generatePuzzle(55));
-  start(board);
+  if(confirmProceed()){
+    hintCount = 0;
+    maxHints = 3;
+    document.getElementById("hint-count").value = hintCount +'/'+maxHints;
+    clearprev();
+    let board = gridToString(generatePuzzle(55));
+    unsolvedSudoku = board;
+    start(board);
+  }
 }
 
 
@@ -403,7 +477,7 @@ function validation() {
     alert("You Have Completed!! :-) ")
   }
   else {
-    alert("Something Went Wrong! Keep Trying :-( ")
+    alert("Sudoku Not Completed Yet Keep Trying :-( ")
   }
 }
 
