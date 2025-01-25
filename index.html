@@ -19,7 +19,14 @@
         <button class="medium btn" id="thats-okay" onclick="clearprev()">Medium</button>
         <button class="hard btn" id="oops-hard" onclick="clearprev()">Hard</button>
         <button class="kill btn" id="over-kill" onclick="clearprev()">OverKill</button>
+    </div>
+
+    <div class="hint">
+        <button class="reset btn" id="reset">Reset</button>
+            <!-- Validate Button -->
+        <button class="validate-button btn" id="validate">Validate</button>
         <button class="hint btn" id="show-hint">Hint</button>
+        <input type="text" class="hc btn2" id="hint-count" maxlength="2" readonly >
     </div>
 
     <!-- Actual Sudoku Board -->
@@ -207,9 +214,6 @@
             </tr>
         </table>
     </div>
-
-    <!-- Validate Button -->
-    <button class="validate-button btn" id="validate">Validate</button>
 </body>
 <script src="script.js"></script>
 </html>
