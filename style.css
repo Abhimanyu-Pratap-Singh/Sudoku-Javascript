@@ -2,6 +2,22 @@
     font-family: 'Source Sans Pro',sans-serif;
     font-size: 25px;
 }
+
+.hc{
+    text-align: center;
+    align-items: center;
+    width:inherit;
+    height: inherit;
+}
+
+.hint {
+    display: flex;
+    justify-content: space-around; /* Center horizontally */
+    margin-top: 0px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
 body{
     background-color: black;
 }
@@ -14,7 +30,7 @@ body{
     height: auto;
     max-width: 200px;
     color: tomato;
-    font-size: 50px;
+    font-size: 25px;
     border: 1px solid white;
     border-radius: 7px;
     box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 5px #3498db;
@@ -22,20 +38,36 @@ body{
 .hardness{
     display: flex;
     justify-content: space-around;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-top: 0px;
+    margin-left: 150px;
+    margin-right: 150px;
 }
 .btn:hover, .btn:focus {
     box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 5px #3498db;
     background-color: black;
     color: #fff;
     outline: 0;
-  }
+}
+.btn2{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    padding: 5px 10px;
+    border-color: #3498db;
+    width: 110px;
+    border-radius: 5px;
+    color: #fff;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
 .btn{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     padding: 5px 10px;
     border-color: #3498db;
     width: 130px;
@@ -44,9 +76,6 @@ body{
     box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
     -webkit-transition: all 150ms ease-in-out;
     transition: all 150ms ease-in-out;
-}
-.validate-button{
-    margin-top: 40px;
 }
 .board-container{
     display: flex;
